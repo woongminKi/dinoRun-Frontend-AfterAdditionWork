@@ -16,8 +16,6 @@ function* loginUser({ payload }) {
     const getUserResponse = yield axios.get("http://localhost:8000/login", {
       headers: { authorization: token },
     });
-    console.log("!!!", getUserResponse);
-    console.log("###", res);
   } catch (err) {
     yield put(loginFailure(err));
   }
