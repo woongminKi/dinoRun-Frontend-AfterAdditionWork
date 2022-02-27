@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
+
 import { loginRequest } from "../features/auth/authSlice";
 import { auth, signInWithGoogle } from "../firebase";
-import styled from "styled-components";
 
 export default function Home() {
   const dispatch = useDispatch();

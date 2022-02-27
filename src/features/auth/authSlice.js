@@ -11,6 +11,12 @@ const authSlice = createSlice({
     loginRequest: (state) => {
       state.isLoggedIn = false;
     },
+    loginSuccess: (state, action) => {
+      const { message } = action.payload;
+
+      state.isLoggedIn = true;
+      state.isSignUp = message === "유저 등록 성공" ? true : false;
+    },
     loginFailure: (state, action) => {
       const { message, status } = action.payload;
 
@@ -24,6 +30,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { loginRequest, loginFailure } = authSlice.actions;
+export const { loginRequest, loginSuccess, loginFailure } = authSlice.actions;
 
 export default authSlice.reducer;
