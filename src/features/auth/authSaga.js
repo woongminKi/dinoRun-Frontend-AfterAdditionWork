@@ -1,7 +1,8 @@
 import axios from "axios";
 import { put, all, fork, takeLatest } from "redux-saga/effects";
 
-import { loginRequest, loginFailure } from "./authSlice";
+import { loginRequest, loginSuccess, loginFailure } from "./authSlice";
+import { getUserData } from "../userInfo/userInfoSlice";
 
 function* loginUser({ payload }) {
   const { email, displayName, photoURL, token } = payload;
@@ -16,6 +17,15 @@ function* loginUser({ payload }) {
     const getUserResponse = yield axios.get("http://localhost:8000/login", {
       headers: { authorization: token },
     });
+
+    const user = {
+      ...getUserResponse.data.user,
+      accessToken: getUserResponse.data.accessToken,
+      refreshToken: getUserResponse.data.refreshToken,
+    };
+
+    yield put(getUserData(user));
+    yield put(loginSuccess({ message: res.data.result }));
   } catch (err) {
     yield put(loginFailure(err));
   }
