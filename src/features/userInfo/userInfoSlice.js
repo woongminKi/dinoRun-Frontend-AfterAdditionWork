@@ -9,8 +9,6 @@ const userInfoSlice = createSlice({
       email: "",
       imageUrl: "",
       score: 0,
-      accessToken: "",
-      refreshToken: "",
     },
   },
   reducers: {

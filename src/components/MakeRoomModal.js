@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { WHITE, BLACK, MAIN_COLOR_1 } from "../constants/styles";
+import { WHITE, BLACK, MAIN_COLOR_1 } from "../util/styles";
 
 export default function MakeRoomModal({ onMake, onClose, children }) {
   return (

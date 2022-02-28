@@ -12,6 +12,9 @@ export default function Main() {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [title, setTitle] = useState("");
   const user = useSelector((state) => state.userInfo.user);
+  const rooms = useSelector((state) => state.room.rooms);
+
+  const recentRoom = Object.values(rooms).slice(rooms.length - 1)[0];
   const userObj = {
     id: user._id,
     displayName: user.displayName,
@@ -24,7 +27,8 @@ export default function Main() {
   const handleMakeRoomButton = () => {
     setIsOpenModal(false);
     dispatch(getRoomData({ title, userObj }));
-    navigate("/ready-for-battle-room");
+
+    navigate(`/readyBattleRoom/${recentRoom._id}`);
   };
 
   const handleCancelMakeRoomButton = () => {

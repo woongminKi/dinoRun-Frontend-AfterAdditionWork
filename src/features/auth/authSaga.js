@@ -3,6 +3,7 @@ import { put, all, fork, takeLatest } from "redux-saga/effects";
 
 import { loginRequest, loginSuccess, loginFailure } from "./authSlice";
 import { getUserData } from "../userInfo/userInfoSlice";
+import { setCookie } from "../../util/cookies";
 
 function* loginUser({ payload }) {
   const { email, displayName, photoURL, token } = payload;
@@ -18,10 +19,22 @@ function* loginUser({ payload }) {
       headers: { authorization: token },
     });
 
+    setCookie("accessToken", getUserResponse.data.accessToken, {
+      path: "/",
+      secure: true,
+      sameSite: "none",
+      maxAge: 3600,
+    });
+
+    setCookie("refreshToken", getUserResponse.data.refreshToken, {
+      path: "/",
+      secure: true,
+      sameSite: "none",
+      maxAge: 604800,
+    });
+
     const user = {
       ...getUserResponse.data.user,
-      accessToken: getUserResponse.data.accessToken,
-      refreshToken: getUserResponse.data.refreshToken,
     };
 
     yield put(getUserData(user));
