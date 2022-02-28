@@ -1,5 +1,7 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import createSagaMiddleWare from "redux-saga";
+import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage/session";
 
 import { all } from "redux-saga/effects";
 import { authSaga } from "../features/auth/authSaga";
@@ -11,18 +13,25 @@ import userInfo from "../features/userInfo/userInfoSlice";
 
 const sagaMiddleware = createSagaMiddleWare();
 
+const persistConfig = {
+  key: "root",
+  storage,
+};
+
 const reducer = combineReducers({
   auth,
   room,
   userInfo,
 });
 
+const persistedReducer = persistReducer(persistConfig, reducer);
+
 function* rootSaga() {
   yield all([authSaga(), roomSaga(), userInfoSaga()]);
 }
 
 const store = configureStore({
-  reducer: reducer,
+  reducer: persistedReducer,
   middleware: [sagaMiddleware],
 });
 
