@@ -18,7 +18,7 @@ function* loginUser({ payload }) {
     const getUserResponse = yield axios.get("http://localhost:8000/login", {
       headers: { authorization: token },
     });
-    console.log("getUserResponse::", getUserResponse);
+
     setCookie("accessToken", getUserResponse.data.accessToken, {
       path: "/",
       secure: true,
