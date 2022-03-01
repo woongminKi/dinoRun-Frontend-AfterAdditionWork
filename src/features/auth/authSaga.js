@@ -23,7 +23,7 @@ function* loginUser({ payload }) {
       path: "/",
       secure: true,
       sameSite: "none",
-      maxAge: 3600,
+      maxAge: 604800,
     });
 
     setCookie("refreshToken", getUserResponse.data.refreshToken, {

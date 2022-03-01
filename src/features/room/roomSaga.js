@@ -3,6 +3,7 @@ import { put, all, fork, takeLatest } from "redux-saga/effects";
 import {
   getRoomData,
   makeRoomSuccess,
+  updateRoomData,
   deleteRoomData,
   roomFailure,
 } from "./roomSlice";
@@ -12,7 +13,7 @@ function* registerRoom({ payload }) {
   const { title, userObj } = payload;
 
   try {
-    const res = yield axios.post(`http://localhost:8000/rooms/${userObj.id}`, {
+    yield axios.post(`http://localhost:8000/rooms/${userObj.id}`, {
       title,
       userObj,
       headers: {
@@ -59,6 +60,7 @@ function* deleteRoom({ payload }) {
       }
     );
 
+    yield put(updateRoomData({ remainRooms: deleteRoomInfo.data.remainRooms }));
     yield put(deleteRoomData({ message: deleteRoomInfo.data.result }));
   } catch (err) {
     yield put(roomFailure(err));

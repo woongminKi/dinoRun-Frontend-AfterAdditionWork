@@ -8,22 +8,19 @@ const roomSlice = createSlice({
     error: null,
   },
   reducers: {
-    getRoomData: (state, action) => {
+    getRoomData: (state) => {
       state.rooms = [];
       state.isMakeRoomSuccess = false;
     },
     makeRoomSuccess: (state, action) => {
-      state.rooms = action.payload.data.roomArray;
+      state.rooms = action.payload.data;
       state.isMakeRoomSuccess = true;
     },
-    deleteRoomData: (state, action) => {
-      const { message } = action.payload;
-
-      if (message === "방이 삭제됐습니다.") {
-        state.title = "";
-        state.participants = [];
-        state.isMakeRoomSuccess = false;
-      }
+    updateRoomData: (state, action) => {
+      state.rooms = action.payload.remainRooms;
+    },
+    deleteRoomData: (state) => {
+      state.isMakeRoomSuccess = false;
     },
     roomFailure: (state, action) => {
       const { message, status } = action.payload;
@@ -38,7 +35,12 @@ const roomSlice = createSlice({
   },
 });
 
-export const { getRoomData, makeRoomSuccess, deleteRoomData, roomFailure } =
-  roomSlice.actions;
+export const {
+  getRoomData,
+  makeRoomSuccess,
+  updateRoomData,
+  deleteRoomData,
+  roomFailure,
+} = roomSlice.actions;
 
 export default roomSlice.reducer;
