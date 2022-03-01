@@ -16,6 +16,18 @@ export default function ReadyForBattleRoom() {
   const [player2isReady, setPlayer2IsReady] = useState(false);
   const profileImage = user.imageUrl;
   const { roomid } = params;
+  const roomInfoArray = [];
+
+  rooms.forEach((room) => {
+    const { _id } = room;
+    const { title } = room.roomInfo;
+    const roomInfoObj = {
+      id: _id,
+      title,
+    };
+
+    roomInfoArray.push(roomInfoObj);
+  });
 
   const handleDeleteRoomButton = () => {
     let targetRoom = null;
@@ -48,11 +60,18 @@ export default function ReadyForBattleRoom() {
 
   return (
     <>
+      {roomInfoArray.map((roomElement) => {
+        if (roomid === roomElement.id) {
+          return <div key={roomElement.id}>제목: {roomElement.title}</div>;
+        }
+      })}
+
       <div>
         {player1isReady && player2isReady && (
           <button onClick={handleGameStartButton}>게임 시작</button>
         )}
       </div>
+
       <Div>나: {user.displayName}</Div>
       <ImageDiv
         className="profile-image"
