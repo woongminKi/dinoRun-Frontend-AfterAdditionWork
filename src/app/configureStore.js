@@ -7,9 +7,13 @@ import { all } from "redux-saga/effects";
 import { authSaga } from "../features/auth/authSaga";
 import { roomSaga } from "../features/room/roomSaga";
 import { userInfoSaga } from "../features/userInfo/userInfoSaga";
+import { gameSaga } from "../features/game/gameSaga";
+import { prePlayGameSocketSaga } from "../modules/useSocket";
+
 import auth from "../features/auth/authSlice";
 import room from "../features/room/roomSlice";
 import userInfo from "../features/userInfo/userInfoSlice";
+import game from "../features/game/gameSlice";
 
 const sagaMiddleware = createSagaMiddleWare();
 
@@ -22,12 +26,19 @@ const reducer = combineReducers({
   auth,
   room,
   userInfo,
+  game,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
 
 function* rootSaga() {
-  yield all([authSaga(), roomSaga(), userInfoSaga()]);
+  yield all([
+    authSaga(),
+    roomSaga(),
+    userInfoSaga(),
+    gameSaga(),
+    prePlayGameSocketSaga(),
+  ]);
 }
 
 const store = configureStore({

@@ -1,29 +1,33 @@
 import axios from "axios";
 import { put, all, fork, takeLatest } from "redux-saga/effects";
 import {
-  getRoomData,
+  requestRoomData,
   makeRoomSuccess,
   updateRoomData,
+  requestUpdateRoomData,
+  remainRoomData,
   deleteRoomData,
   roomFailure,
 } from "./roomSlice";
 import { getCookie, setCookie } from "../../util/cookies";
 
-function* registerRoom({ payload }) {
-  const { title, userObj } = payload;
+function* requestRoom({ payload }) {
+  const { title, user } = payload;
 
   try {
-    yield axios.post(`http://localhost:8000/rooms/${userObj.id}`, {
-      title,
-      userObj,
-      headers: {
-        accessAuthorization: `${getCookie("accessToken")}`,
-        refreshAuthorization: `${getCookie("refreshToken")}`,
-      },
-    });
+    if (title) {
+      yield axios.post(`http://localhost:8000/rooms/${user._id}`, {
+        title,
+        user,
+        headers: {
+          accessAuthorization: `${getCookie("accessToken")}`,
+          refreshAuthorization: `${getCookie("refreshToken")}`,
+        },
+      });
+    }
 
     const getRoomInfo = yield axios.get(
-      `http://localhost:8000/rooms/${userObj.id}`,
+      `http://localhost:8000/rooms/${user._id}`,
       {
         headers: {
           accessAuthorization: `${getCookie("accessToken")}`,
@@ -47,6 +51,23 @@ function* registerRoom({ payload }) {
   }
 }
 
+function* updateRoom({ payload }) {
+  const { _id } = payload;
+
+  try {
+    const getRoomInfo = yield axios.get(`http://localhost:8000/rooms/${_id}`, {
+      headers: {
+        accessAuthorization: `${getCookie("accessToken")}`,
+        refreshAuthorization: `${getCookie("refreshToken")}`,
+      },
+    });
+
+    yield put(updateRoomData(getRoomInfo));
+  } catch (err) {
+    yield put(roomFailure(err));
+  }
+}
+
 function* deleteRoom({ payload }) {
   const { targetRoom } = payload;
 
@@ -60,7 +81,7 @@ function* deleteRoom({ payload }) {
       }
     );
 
-    yield put(updateRoomData({ remainRooms: deleteRoomInfo.data.remainRooms }));
+    yield put(remainRoomData({ remainRooms: deleteRoomInfo.data.remainRooms }));
     yield put(deleteRoomData({ message: deleteRoomInfo.data.result }));
   } catch (err) {
     yield put(roomFailure(err));
@@ -68,7 +89,11 @@ function* deleteRoom({ payload }) {
 }
 
 function* watchRegisterRoom() {
-  yield takeLatest(getRoomData, registerRoom);
+  yield takeLatest(requestRoomData, requestRoom);
+}
+
+function* watchUpdateRoom() {
+  yield takeLatest(requestUpdateRoomData, updateRoom);
 }
 
 function* watchDeleteRoom() {
@@ -76,5 +101,9 @@ function* watchDeleteRoom() {
 }
 
 export function* roomSaga() {
-  yield all([fork(watchRegisterRoom), fork(watchDeleteRoom)]);
+  yield all([
+    fork(watchRegisterRoom),
+    fork(watchUpdateRoom),
+    fork(watchDeleteRoom),
+  ]);
 }
