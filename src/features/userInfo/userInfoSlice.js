@@ -15,6 +15,7 @@ const userInfoSlice = createSlice({
     getUserData: (state, action) => {
       state.user = Object.assign({}, action.payload);
     },
+    joinedRoom: (state) => {},
   },
 });
 

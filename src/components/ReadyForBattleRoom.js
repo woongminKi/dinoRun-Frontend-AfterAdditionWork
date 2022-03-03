@@ -1,32 +1,60 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+
 import { deleteRoomData } from "../features/room/roomSlice";
+import { socketAction } from "../modules/useSocket";
+import { deleteGameRoomData } from "../features/game/gameSlice";
 
 export default function ReadyForBattleRoom() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams();
+  const { roomid } = params;
 
   const rooms = useSelector((state) => state.room.rooms);
   const user = useSelector((state) => state.userInfo.user);
+  const game = useSelector((state) => state.game);
 
   const [player1isReady, setPlayer1IsReady] = useState(false);
   const [player2isReady, setPlayer2IsReady] = useState(false);
   const profileImage = user.imageUrl;
-  const { roomid } = params;
+
   const roomInfoArray = [];
+  const anotherPerson = [];
 
-  rooms.forEach((room) => {
-    const { _id } = room;
-    const { title } = room.roomInfo;
-    const roomInfoObj = {
-      id: _id,
-      title,
-    };
+  useEffect(() => {
+    socketAction.joinRoom(roomid, user);
+  }, []);
 
-    roomInfoArray.push(roomInfoObj);
+  if (game.isGameStart) {
+    navigate("/game");
+  }
+
+  if (rooms) {
+    rooms.forEach((room) => {
+      const { _id, author } = room;
+      const { title, participants } = room.roomInfo;
+      const roomInfoObj = {
+        id: _id,
+        author,
+        title,
+        participants,
+      };
+
+      roomInfoArray.push(roomInfoObj);
+    });
+  }
+
+  roomInfoArray.forEach((roomElement) => {
+    if (roomid === roomElement.id) {
+      roomElement.participants.forEach((participant) => {
+        if (user.email !== participant.email) {
+          anotherPerson.push(participant);
+        }
+      });
+    }
   });
 
   const handleDeleteRoomButton = () => {
@@ -38,11 +66,13 @@ export default function ReadyForBattleRoom() {
       }
     }
 
+    dispatch(deleteGameRoomData());
     dispatch(deleteRoomData({ targetRoom }));
     navigate("/main");
   };
 
   const handleGetOutRoomButton = () => {
+    dispatch(deleteGameRoomData());
     navigate("/main");
   };
 
@@ -55,22 +85,17 @@ export default function ReadyForBattleRoom() {
   };
 
   const handleGameStartButton = () => {
-    navigate("/game");
+    socketAction.gameStart(roomid);
+    console.log("얘 때문에 warning?");
   };
 
   return (
     <>
       {roomInfoArray.map((roomElement) => {
         if (roomid === roomElement.id) {
-          return <div key={roomElement.id}>제목: {roomElement.title}</div>;
+          return <div>제목: {roomElement.title}</div>;
         }
       })}
-
-      <div>
-        {player1isReady && player2isReady && (
-          <button onClick={handleGameStartButton}>게임 시작</button>
-        )}
-      </div>
 
       <Div>나: {user.displayName}</Div>
       <ImageDiv
@@ -82,22 +107,38 @@ export default function ReadyForBattleRoom() {
         </span>
       </ImageDiv>
       <button onClick={handlePlayer1ReadyButton}>Ready</button>
+
+      {roomInfoArray.map((roomElement) => {
+        if (roomElement.author.id === user._id && roomid === roomElement.id) {
+          return (
+            <>
+              <button
+                className="delete-button"
+                onClick={handleDeleteRoomButton}
+              >
+                방 삭제
+              </button>
+              <button onClick={handleGameStartButton}>게임 시작</button>
+            </>
+          );
+        }
+      })}
       <hr />
-      <Div>상대방: {user.displayName}</Div>
+
+      <div>상대방: {game.joinedRoomUser.displayName}</div>
       <ImageDiv
         className="profile-image"
-        style={{ background: `url(${profileImage})` }}
+        style={{ background: `url(${game.joinedRoomUser.imageUrl})` }}
       >
         <span className="ready-text">
           {player2isReady ? <>Ready</> : <></>}
         </span>
       </ImageDiv>
+
       <button onClick={handlePlayer2ReadyButton}>Ready</button>
+
       <div>
         <button onClick={handleGetOutRoomButton}>나가기</button>
-        <button className="delete-button" onClick={handleDeleteRoomButton}>
-          방 삭제
-        </button>
       </div>
     </>
   );

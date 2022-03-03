@@ -5,18 +5,27 @@ const roomSlice = createSlice({
   initialState: {
     rooms: [],
     isMakeRoomSuccess: false,
+    isUpdateRoomSuccess: false,
+    participants: [],
+    isRegistParticipants: false,
     error: null,
   },
   reducers: {
-    getRoomData: (state) => {
-      state.rooms = [];
+    requestRoomData: (state, action) => {
+      state.rooms = action.payload.data;
       state.isMakeRoomSuccess = false;
     },
     makeRoomSuccess: (state, action) => {
       state.rooms = action.payload.data;
       state.isMakeRoomSuccess = true;
     },
+    requestUpdateRoomData: (state, action) => {
+      state.isUpdateRoomSuccess = true;
+    },
     updateRoomData: (state, action) => {
+      state.rooms = action.payload.data;
+    },
+    remainRoomData: (state, action) => {
       state.rooms = action.payload.remainRooms;
     },
     deleteRoomData: (state) => {
@@ -36,9 +45,11 @@ const roomSlice = createSlice({
 });
 
 export const {
-  getRoomData,
+  requestRoomData,
   makeRoomSuccess,
   updateRoomData,
+  requestUpdateRoomData,
+  remainRoomData,
   deleteRoomData,
   roomFailure,
 } = roomSlice.actions;
