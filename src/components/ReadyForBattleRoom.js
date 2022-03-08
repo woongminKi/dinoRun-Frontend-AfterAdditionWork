@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import { deleteRoomData } from "../features/room/roomSlice";
 import { socketAction } from "../modules/useSocket";
-import { deleteGameRoomData } from "../features/game/gameSlice";
+import { cleanUpGame } from "../features/game/gameSlice";
 
 export default function ReadyForBattleRoom() {
   const dispatch = useDispatch();
@@ -66,13 +66,13 @@ export default function ReadyForBattleRoom() {
       }
     }
 
-    dispatch(deleteGameRoomData());
+    dispatch(cleanUpGame());
     dispatch(deleteRoomData({ targetRoom }));
     navigate("/main");
   };
 
   const handleGetOutRoomButton = () => {
-    dispatch(deleteGameRoomData());
+    dispatch(cleanUpGame());
     navigate("/main");
   };
 
@@ -93,7 +93,6 @@ export default function ReadyForBattleRoom() {
         className="profile-image"
         style={{ background: `url(${profileImage})` }}
       />
-      <div></div>
 
       <button onClick={handleGetOutRoomButton}>나가기</button>
 

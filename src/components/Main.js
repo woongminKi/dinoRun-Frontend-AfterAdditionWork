@@ -6,7 +6,7 @@ import styled from "styled-components";
 import MakeRoomModal from "./MakeRoomModal";
 import { socketAction } from "../modules/useSocket";
 import { requestRoomData } from "../features/room/roomSlice";
-import { deleteGameRoomData } from "../features/game/gameSlice";
+import { cleanUpGame } from "../features/game/gameSlice";
 
 export default function Main() {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ export default function Main() {
   const [title, setTitle] = useState("");
 
   useEffect(() => {
-    dispatch(deleteGameRoomData());
+    dispatch(cleanUpGame());
   }, []);
 
   useEffect(() => {

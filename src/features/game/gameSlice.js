@@ -31,13 +31,6 @@ const gameSlice = createSlice({
     gameStart: (state) => {
       state.isGameStart = true;
     },
-    deleteGameRoomData: (state) => {
-      state.isJoined = false;
-      state.isGameStart = false;
-      state.joinedRoomUser = {};
-      state.roomParticipants = [];
-      state.currentParticipants = [];
-    },
     gameFailure: (state, action) => {
       const { message, status } = action.payload;
 
@@ -77,11 +70,11 @@ export const {
   requestJoinRoomData,
   getGameRoomParticipants,
   gameStart,
-  deleteGameRoomData,
   gameFailure,
   getMyScore,
-  gameFinished,
   player2Score,
+  gameFinished,
+  cleanUpGame,
 } = gameSlice.actions;
 
 export default gameSlice.reducer;

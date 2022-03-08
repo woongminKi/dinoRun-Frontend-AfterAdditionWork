@@ -5,7 +5,7 @@ import { socketAction } from "../../modules/useSocket";
 import {
   getMyScore,
   gameFinished,
-  deleteGameRoomData,
+  cleanUpGame,
 } from "../../features/game/gameSlice";
 
 import DinoPlayer from "./character/DinoPlayer";
@@ -39,7 +39,7 @@ export default function DinoRunCanvas() {
   birdImage.src = birdCharacterImage;
 
   const handleGoToLobby = () => {
-    // dispatch(deleteGameRoomData());
+    dispatch(cleanUpGame());
     navigate("/lobby");
   };
 

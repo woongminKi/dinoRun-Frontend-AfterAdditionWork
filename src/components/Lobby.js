@@ -14,7 +14,6 @@ export default function Lobby() {
   const [isClickEnterRoom, setIsClickEnterRoom] = useState(false);
   const roomInfoArray = [];
 
-  console.log("현재 있는 방 리스트:::", rooms);
   if (rooms) {
     rooms.forEach((room) => {
       const { _id } = room;
@@ -53,7 +52,6 @@ export default function Lobby() {
             onClick={() => handleEnteredGameRoom(roomElement.id, user)}
           >
             <div className="room-title">제목: {roomElement.title}</div>
-            <div>인원수: {roomElement.people % 2}</div>
             <button>입장 하기</button>
           </CardWrapper>
         );
