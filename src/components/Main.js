@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import MakeRoomModal from "./MakeRoomModal";
+import { socketAction } from "../modules/useSocket";
 import { requestRoomData } from "../features/room/roomSlice";
 import { deleteGameRoomData } from "../features/game/gameSlice";
 
@@ -11,14 +12,21 @@ export default function Main() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { isLoggedIn } = useSelector((state) => state.auth);
   const user = useSelector((state) => state.userInfo.user);
+
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isMadeRoom, setIsMadeRoom] = useState(false);
+  const [isClickMadeRoom, setIsClickMadeRoom] = useState(false);
   const [title, setTitle] = useState("");
 
   useEffect(() => {
     dispatch(deleteGameRoomData());
   }, []);
+
+  useEffect(() => {
+    socketAction.waitJoinRoom(user);
+  }, [isLoggedIn]);
 
   const handleOpenMakeRoomModal = () => {
     setIsOpenModal(true);
@@ -28,6 +36,7 @@ export default function Main() {
   const handleMakeRoomButton = () => {
     setIsMadeRoom(false);
     dispatch(requestRoomData({ title, user }));
+    setIsClickMadeRoom(true);
     navigate("/lobby");
   };
 
