@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import { deleteRoomData } from "../features/room/roomSlice";
 import { socketAction } from "../modules/useSocket";
-import { deleteGameRoomData } from "../features/game/gameSlice";
+import { cleanUpGame } from "../features/game/gameSlice";
 
 export default function ReadyForBattleRoom() {
   const dispatch = useDispatch();
@@ -13,13 +13,13 @@ export default function ReadyForBattleRoom() {
   const params = useParams();
   const { roomid } = params;
 
-  const rooms = useSelector((state) => state.room.rooms);
+  const roomElements = useSelector((state) => state.room);
+  const { rooms } = useSelector((state) => state.room);
   const user = useSelector((state) => state.userInfo.user);
   const game = useSelector((state) => state.game);
 
-  const [player1isReady, setPlayer1IsReady] = useState(false);
-  const [player2isReady, setPlayer2IsReady] = useState(false);
   const profileImage = user.imageUrl;
+  const { waitParticipants } = roomElements;
 
   const roomInfoArray = [];
   const anotherPerson = [];
@@ -66,27 +66,18 @@ export default function ReadyForBattleRoom() {
       }
     }
 
-    dispatch(deleteGameRoomData());
+    dispatch(cleanUpGame());
     dispatch(deleteRoomData({ targetRoom }));
     navigate("/main");
   };
 
   const handleGetOutRoomButton = () => {
-    dispatch(deleteGameRoomData());
+    dispatch(cleanUpGame());
     navigate("/main");
-  };
-
-  const handlePlayer1ReadyButton = () => {
-    setPlayer1IsReady((current) => !current);
-  };
-
-  const handlePlayer2ReadyButton = () => {
-    setPlayer2IsReady((current) => !current);
   };
 
   const handleGameStartButton = () => {
     socketAction.gameStart(roomid);
-    console.log("얘 때문에 warning?");
   };
 
   return (
@@ -101,12 +92,9 @@ export default function ReadyForBattleRoom() {
       <ImageDiv
         className="profile-image"
         style={{ background: `url(${profileImage})` }}
-      >
-        <span className="ready-text">
-          {player1isReady ? <>Ready</> : <></>}
-        </span>
-      </ImageDiv>
-      <button onClick={handlePlayer1ReadyButton}>Ready</button>
+      />
+
+      <button onClick={handleGetOutRoomButton}>나가기</button>
 
       {roomInfoArray.map((roomElement) => {
         if (roomElement.author.id === user._id && roomid === roomElement.id) {
@@ -125,21 +113,11 @@ export default function ReadyForBattleRoom() {
       })}
       <hr />
 
-      <div>상대방: {game.joinedRoomUser.displayName}</div>
+      <div>상대방: {waitParticipants[1].displayName}</div>
       <ImageDiv
         className="profile-image"
-        style={{ background: `url(${game.joinedRoomUser.imageUrl})` }}
-      >
-        <span className="ready-text">
-          {player2isReady ? <>Ready</> : <></>}
-        </span>
-      </ImageDiv>
-
-      <button onClick={handlePlayer2ReadyButton}>Ready</button>
-
-      <div>
-        <button onClick={handleGetOutRoomButton}>나가기</button>
-      </div>
+        style={{ background: `url(${waitParticipants[1].imageUrl})` }}
+      />
     </>
   );
 }

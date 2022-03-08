@@ -1,12 +1,17 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+import { enterRoom } from "../features/room/roomSlice";
+
 export default function Lobby() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const rooms = useSelector((state) => state.room.rooms);
+  const user = useSelector((state) => state.userInfo.user);
+  const [isClickEnterRoom, setIsClickEnterRoom] = useState(false);
   const roomInfoArray = [];
 
   if (rooms) {
@@ -25,7 +30,9 @@ export default function Lobby() {
     });
   }
 
-  const handleEnteredGameRoom = (id) => {
+  const handleEnteredGameRoom = (id, user) => {
+    setIsClickEnterRoom(true);
+    dispatch(enterRoom(user));
     navigate(`/readyBattleRoom/${id}`);
   };
 
@@ -42,10 +49,9 @@ export default function Lobby() {
         return (
           <CardWrapper
             key={roomElement.id}
-            onClick={() => handleEnteredGameRoom(roomElement.id)}
+            onClick={() => handleEnteredGameRoom(roomElement.id, user)}
           >
             <div className="room-title">제목: {roomElement.title}</div>
-            <div>인원수: {roomElement.people}</div>
             <button>입장 하기</button>
           </CardWrapper>
         );

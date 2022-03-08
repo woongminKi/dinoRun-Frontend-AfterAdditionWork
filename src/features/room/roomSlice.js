@@ -6,8 +6,11 @@ const roomSlice = createSlice({
     rooms: [],
     isMakeRoomSuccess: false,
     isUpdateRoomSuccess: false,
-    participants: [],
     isRegistParticipants: false,
+    playerIsEntered: false,
+    playersEmail: [],
+    waitParticipants: [],
+    recentlyMadeRoomId: "",
     error: null,
   },
   reducers: {
@@ -18,8 +21,9 @@ const roomSlice = createSlice({
     makeRoomSuccess: (state, action) => {
       state.rooms = action.payload.data;
       state.isMakeRoomSuccess = true;
+      state.recentlyMadeRoomId = action.payload.data.slice(-1)[0]._id;
     },
-    requestUpdateRoomData: (state, action) => {
+    requestUpdateRoomData: (state) => {
       state.isUpdateRoomSuccess = true;
     },
     updateRoomData: (state, action) => {
@@ -27,6 +31,12 @@ const roomSlice = createSlice({
     },
     remainRoomData: (state, action) => {
       state.rooms = action.payload.remainRooms;
+    },
+    waitJoinRoom: (state, action) => {
+      state.waitParticipants = state.waitParticipants.concat(action.payload);
+    },
+    enterRoom: (state, action) => {
+      state.playersEmail = state.playersEmail.concat(action.payload);
     },
     deleteRoomData: (state) => {
       state.isMakeRoomSuccess = false;
@@ -50,6 +60,8 @@ export const {
   updateRoomData,
   requestUpdateRoomData,
   remainRoomData,
+  waitJoinRoom,
+  enterRoom,
   deleteRoomData,
   roomFailure,
 } = roomSlice.actions;

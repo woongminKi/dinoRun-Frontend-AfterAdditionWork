@@ -1,6 +1,4 @@
-import axios from "axios";
-
-import { put, all, fork, takeLatest } from "redux-saga/effects";
+import { all, fork, takeLatest } from "redux-saga/effects";
 import { getUserData } from "../userInfo/userInfoSlice";
 
 function* userInfo({ payload }) {}

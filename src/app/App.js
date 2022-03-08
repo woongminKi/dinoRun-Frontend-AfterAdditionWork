@@ -5,7 +5,7 @@ import Home from "../components/Home";
 import Main from "../components/Main";
 import ReadyForBattleRoom from "../components/ReadyForBattleRoom";
 import Lobby from "../components/Lobby";
-import Game from "../components/Game";
+import GameContainer from "../components/game/GameContainer";
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
           element={<ReadyForBattleRoom />}
         />
         <Route path="/lobby" element={<Lobby />} />
-        <Route path="/game" element={<Game />} />
+        <Route path="/game" element={<GameContainer />} />
       </Routes>
     </>
   );
