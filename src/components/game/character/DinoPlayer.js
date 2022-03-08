@@ -81,16 +81,7 @@ class DinoPlayer {
         this.dinoTrex.jumpState = !this.dinoTrex.jumpState;
         this.dinoTrex.jump();
       }
-      // this.update();
     }
-  }
-
-  update() {
-    requestAnimationFrame(this.update.bind(this));
-    const currentScore = performance.now() / 10;
-    this.ctx.clearRect(0, 0, this.width, this.height);
-
-    return currentScore;
   }
 }
 
