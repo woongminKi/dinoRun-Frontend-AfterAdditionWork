@@ -1,18 +1,28 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
-import { enterRoom } from "../features/room/roomSlice";
+import { socketAction } from "../modules/useSocket";
 
 export default function Lobby() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const rooms = useSelector((state) => state.room.rooms);
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { rooms } = useSelector((state) => state.room);
   const user = useSelector((state) => state.userInfo.user);
+
   const [isClickEnterRoom, setIsClickEnterRoom] = useState(false);
   const roomInfoArray = [];
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/");
+    }
+
+    if (rooms) {
+      socketAction.makeRoom(rooms);
+    }
+  }, []);
 
   if (rooms) {
     rooms.forEach((room) => {
@@ -30,9 +40,8 @@ export default function Lobby() {
     });
   }
 
-  const handleEnteredGameRoom = (id, user) => {
+  const handleEnteredGameRoom = (id) => {
     setIsClickEnterRoom(true);
-    dispatch(enterRoom(user));
     navigate(`/readyBattleRoom/${id}`);
   };
 
@@ -40,10 +49,16 @@ export default function Lobby() {
     navigate("/main");
   };
 
+  const handleSocketEnteredGameRoom = () => {
+    socketAction.checkAnotherPlayerEntered(user);
+  };
+
   return (
     <Container>
       <Div>Game Lobby</Div>
-      <button onClick={handleMakeRoom}>방 만들기</button>
+      <button className="action-button" onClick={handleMakeRoom}>
+        방 만들기
+      </button>
 
       {roomInfoArray.map((roomElement) => {
         return (
@@ -52,7 +67,12 @@ export default function Lobby() {
             onClick={() => handleEnteredGameRoom(roomElement.id, user)}
           >
             <div className="room-title">제목: {roomElement.title}</div>
-            <button>입장 하기</button>
+            <button
+              className="action-button"
+              onClick={handleSocketEnteredGameRoom}
+            >
+              입장 하기
+            </button>
           </CardWrapper>
         );
       })}
@@ -66,7 +86,8 @@ const Div = styled.div`
 
 const CardWrapper = styled.div`
   border: 1px solid black;
-  width: 100px;
+  margin-top: 5px;
+  width: 150px;
   height: 70px;
   text-align: center;
 `;
@@ -89,5 +110,20 @@ const Container = styled.div`
   .room-title {
     font-size: 20px;
     font-weight: 350;
+  }
+
+  .action-button {
+    cursor: pointer;
+    margin-top: 5px;
+    padding: 5px 10px 5px 10px;
+    border-radius: 10px;
+    transition: 0.3s;
+    font-size: 8px;
+    font-weight: 10;
+  }
+
+  .action-button:hover {
+    padding: 7px 12px 7px 12px;
+    transition: all 0.2s linear 0s;
   }
 `;

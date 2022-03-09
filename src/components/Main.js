@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import MakeRoomModal from "./MakeRoomModal";
 import { socketAction } from "../modules/useSocket";
-import { requestRoomData } from "../features/room/roomSlice";
+import { requestRoomData, closedAlarmModal } from "../features/room/roomSlice";
 import { cleanUpGame } from "../features/game/gameSlice";
 
 export default function Main() {
@@ -14,6 +14,13 @@ export default function Main() {
 
   const { isLoggedIn } = useSelector((state) => state.auth);
   const user = useSelector((state) => state.userInfo.user);
+  const rooms = useSelector((state) => state.room.rooms);
+  const {
+    waitParticipants,
+    playerIsEntered,
+    player1IsEntered,
+    player2IsEntered,
+  } = useSelector((state) => state.room);
 
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isMadeRoom, setIsMadeRoom] = useState(false);
@@ -21,7 +28,11 @@ export default function Main() {
   const [title, setTitle] = useState("");
 
   useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/");
+    }
     dispatch(cleanUpGame());
+    dispatch(closedAlarmModal());
   }, []);
 
   useEffect(() => {
@@ -102,6 +113,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-family: "League Gothic";
 
   .make-room-button {
     cursor: pointer;

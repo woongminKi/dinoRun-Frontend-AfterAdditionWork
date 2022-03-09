@@ -9,8 +9,6 @@ const gameSlice = createSlice({
     joinedRoomUser: {},
     roomParticipants: [],
     currentParticipants: [],
-    myScore: 0,
-    player2YourScore: 0,
     isDead: false,
     error: null,
   },
@@ -31,6 +29,9 @@ const gameSlice = createSlice({
     gameStart: (state) => {
       state.isGameStart = true;
     },
+    gameFinished: (state) => {
+      state.isDead = true;
+    },
     gameFailure: (state, action) => {
       const { message, status } = action.payload;
 
@@ -47,9 +48,6 @@ const gameSlice = createSlice({
     player2Score: (state, action) => {
       state.player2YourScore = action.payload;
     },
-    gameFinished: (state) => {
-      state.isDead = true;
-    },
     cleanUpGame: (state) => {
       state.isJoined = false;
       state.isReady = false;
@@ -57,8 +55,6 @@ const gameSlice = createSlice({
       state.joinedRoomUser = {};
       state.roomParticipants = [];
       state.currentParticipants = [];
-      state.myScore = 0;
-      state.player2YourScore = 0;
       state.isDead = false;
       state.error = null;
     },
