@@ -58,9 +58,6 @@ export default function ReadyForBattleRoom() {
     });
   }
 
-  console.log("roomInfoArray!!", roomInfoArray);
-  console.log("방 삭제후 rooms!!", rooms);
-
   roomInfoArray.forEach((roomElement) => {
     if (roomid === roomElement.id) {
       roomElement.participants.forEach((participant) => {
@@ -71,7 +68,6 @@ export default function ReadyForBattleRoom() {
     }
   });
 
-  console.log("방장이 방삭제 했냐??", isDeletedRoom);
   const handleGoToLobby = () => {
     dispatch(closedAlarmModal());
     navigate("/main");
