@@ -1,22 +1,22 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import styled from "styled-components";
+
 import { socketAction } from "../../modules/useSocket";
-import {
-  getMyScore,
-  gameFinished,
-  cleanUpGame,
-} from "../../features/game/gameSlice";
+import { getMyScore, gameFinished } from "../../features/game/gameSlice";
 
 import DinoPlayer from "./character/DinoPlayer";
 import DinoTrex from "./character/DinoTrex";
 import Cactus from "./character/Cactus";
 import Bird from "./character/Bird";
+import Ground from "./background/Ground";
 
 import {
   dinoCharacterImage,
   cactusCharacterImage,
   birdCharacterImage,
+  groundImage,
 } from "./gameImages/CharaterImages";
 
 export default function DinoRunCanvas() {
@@ -38,9 +38,11 @@ export default function DinoRunCanvas() {
   const birdImage = new Image();
   birdImage.src = birdCharacterImage;
 
-  const handleGoToLobby = () => {
-    dispatch(cleanUpGame());
-    navigate("/lobby");
+  const backGroundImage = new Image();
+  backGroundImage.src = groundImage;
+
+  const handleGoToMain = () => {
+    navigate("/main");
   };
 
   useEffect(() => {
@@ -61,7 +63,7 @@ export default function DinoRunCanvas() {
     const obstacleArray = [];
     let animationFrameId = null;
     let timer = 0;
-    let gameSpeed = 2;
+    let gameSpeed = 3;
 
     const collisionCheck = (currentScore, differenceX, differenceY) => {
       if (differenceX < 0 && differenceY < 0) {
@@ -75,6 +77,7 @@ export default function DinoRunCanvas() {
 
     const dinoTrex = new DinoTrex(context, dinoImage);
     const cactus = new Cactus(context, cactusImage);
+    const ground = new Ground(context, backGroundImage, canvas.width);
 
     gameResource.current = new DinoPlayer(
       context,
@@ -119,6 +122,7 @@ export default function DinoRunCanvas() {
       });
       collisionCheck(timer);
       dinoTrex.draw();
+      ground.draw();
     };
     drawGame();
     dinoPlayer.start();
@@ -129,9 +133,30 @@ export default function DinoRunCanvas() {
   }, [canvasRef]);
 
   return (
-    <>
+    <Div>
       <canvas ref={canvasRef} />
-      {isCollision && <button onClick={handleGoToLobby}>나가기</button>}
-    </>
+      {isCollision && (
+        <button className="action-button" onClick={handleGoToMain}>
+          나가기
+        </button>
+      )}
+    </Div>
   );
 }
+
+const Div = styled.div`
+  .action-button {
+    cursor: pointer;
+    margin-top: 5px;
+    padding: 12px 15px 12px 15px;
+    border-radius: 10px;
+    transition: 0.3s;
+    font-size: 8px;
+    font-weight: 10;
+  }
+
+  .action-button:hover {
+    padding: 15px 19px 15px 19px;
+    transition: all 0.2s linear 0s;
+  }
+`;

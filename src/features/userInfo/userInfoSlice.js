@@ -8,16 +8,23 @@ const userInfoSlice = createSlice({
       displayName: "",
       email: "",
       imageUrl: "",
-      score: 0,
     },
   },
   reducers: {
     getUserData: (state, action) => {
       state.user = Object.assign({}, action.payload);
     },
+    logoutUserData: (state) => {
+      state.user = {
+        _id: "",
+        displayName: "",
+        email: "",
+        imageUrl: "",
+      };
+    },
   },
 });
 
-export const { getUserData } = userInfoSlice.actions;
+export const { getUserData, logoutUserData } = userInfoSlice.actions;
 
 export default userInfoSlice.reducer;

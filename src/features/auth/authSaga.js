@@ -1,8 +1,13 @@
 import axios from "axios";
 import { put, all, fork, takeLatest } from "redux-saga/effects";
 
-import { loginRequest, loginSuccess, loginFailure } from "./authSlice";
-import { getUserData } from "../userInfo/userInfoSlice";
+import {
+  loginRequest,
+  loginSuccess,
+  loginFailure,
+  logoutRequest,
+} from "./authSlice";
+import { getUserData, logoutUserData } from "../userInfo/userInfoSlice";
 import { setCookie } from "../../util/cookies";
 
 function* loginUser({ payload }) {
@@ -44,10 +49,18 @@ function* loginUser({ payload }) {
   }
 }
 
+function* logoutUser() {
+  yield put(logoutUserData());
+}
+
 function* watchUserLogin() {
   yield takeLatest(loginRequest, loginUser);
 }
 
+function* watchUserLogout() {
+  yield takeLatest(logoutRequest, logoutUser);
+}
+
 export function* authSaga() {
-  yield all([fork(watchUserLogin)]);
+  yield all([fork(watchUserLogin), fork(watchUserLogout)]);
 }
