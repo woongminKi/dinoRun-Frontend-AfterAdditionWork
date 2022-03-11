@@ -105,84 +105,88 @@ export default function DinoRunCanvas() {
   }, [isCollision]);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const context = canvas.getContext("2d");
-    canvas.width = window.innerWidth - 200;
-    canvas.height = window.innerHeight - 300;
+    async function openCamera() {
+      const canvas = canvasRef.current;
+      const context = canvas.getContext("2d");
+      canvas.width = window.innerWidth - 200;
+      canvas.height = window.innerHeight - 300;
 
-    const obstacleArray = [];
-    let animationFrameId = null;
-    let timer = 0;
-    let gameSpeed = 3;
+      const obstacleArray = [];
+      let animationFrameId = null;
+      let timer = 0;
+      let gameSpeed = 3;
 
-    const collisionCheck = (currentScore, differenceX, differenceY) => {
-      if (differenceX < 0 && differenceY < 0) {
+      const collisionCheck = (currentScore, differenceX, differenceY) => {
+        if (differenceX < 0 && differenceY < 0) {
+          context.clearRect(0, 0, canvas.width, canvas.height);
+          cancelAnimationFrame(animationFrameId);
+          setIsCollision(true);
+        }
+
+        setScore(currentScore);
+      };
+
+      const dinoTrex = new DinoTrex(context, dinoImage);
+      const cactus = new Cactus(context, cactusImage);
+      const ground = new Ground(context, backGroundImage, canvas.width);
+
+      gameResource.current = new DinoPlayer(
+        context,
+        10,
+        200,
+        50,
+        50,
+        dinoTrex,
+        cactus,
+        canvas.width,
+        canvas.height
+      );
+      const dinoPlayer = gameResource.current;
+
+      const drawGame = async () => {
+        animationFrameId = requestAnimationFrame(drawGame);
         context.clearRect(0, 0, canvas.width, canvas.height);
+
+        timer++;
+
+        if (timer % 144 === 0) {
+          const cactusElement = new Cactus(context, cactusImage);
+          obstacleArray.push(cactusElement);
+        }
+
+        obstacleArray.forEach((obstacleItem, index, array) => {
+          if (obstacleItem.x < 0) {
+            array.splice(index, 1);
+          }
+
+          if (timer % 500 === 0) {
+            gameSpeed += 1;
+          }
+
+          obstacleItem.x -= gameSpeed;
+
+          obstacleItem.draw();
+
+          const { differenceX, differenceY } =
+            dinoTrex.collisionCheck(obstacleItem);
+          collisionCheck(timer, differenceX, differenceY);
+        });
+        collisionCheck(timer);
+        dinoTrex.draw();
+        ground.draw();
+
+        handleVideoOnPlay();
+      };
+      drawGame();
+      await startVideo();
+      dinoPlayer.start();
+
+      return () => {
         cancelAnimationFrame(animationFrameId);
-        setIsCollision(true);
-      }
+      };
+    }
 
-      setScore(currentScore);
-    };
-
-    const dinoTrex = new DinoTrex(context, dinoImage);
-    const cactus = new Cactus(context, cactusImage);
-    const ground = new Ground(context, backGroundImage, canvas.width);
-
-    gameResource.current = new DinoPlayer(
-      context,
-      10,
-      200,
-      50,
-      50,
-      dinoTrex,
-      cactus,
-      canvas.width,
-      canvas.height
-    );
-    const dinoPlayer = gameResource.current;
-
-    const drawGame = async () => {
-      animationFrameId = requestAnimationFrame(drawGame);
-      context.clearRect(0, 0, canvas.width, canvas.height);
-
-      timer++;
-
-      if (timer % 144 === 0) {
-        const cactusElement = new Cactus(context, cactusImage);
-        obstacleArray.push(cactusElement);
-      }
-
-      obstacleArray.forEach((obstacleItem, index, array) => {
-        if (obstacleItem.x < 0) {
-          array.splice(index, 1);
-        }
-
-        if (timer % 500 === 0) {
-          gameSpeed += 1;
-        }
-
-        obstacleItem.x -= gameSpeed;
-
-        obstacleItem.draw();
-
-        const { differenceX, differenceY } =
-          dinoTrex.collisionCheck(obstacleItem);
-        collisionCheck(timer, differenceX, differenceY);
-      });
-      collisionCheck(timer);
-      dinoTrex.draw();
-      ground.draw();
-
-      handleVideoOnPlay();
-    };
-    drawGame();
-    // await startVideo()
-    dinoPlayer.start();
-
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-    };
+    openCamera();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canvasRef]);
 
