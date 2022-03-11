@@ -14,14 +14,14 @@ function* loginUser({ payload }) {
   const { email, displayName, photoURL, token } = payload;
 
   try {
-    const res = yield axios.post(process.env.REACT_APP_SERVER_LOGIN_URL, {
+    const res = yield axios.post(`${process.env.REACT_APP_SERVER_URL}/login`, {
       email,
       displayName,
       photoURL,
     });
 
     const getUserResponse = yield axios.get(
-      process.env.REACT_APP_SERVER_LOGIN_URL,
+      `${process.env.REACT_APP_SERVER_URL}/login`,
       {
         headers: { authorization: token },
       }

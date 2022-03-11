@@ -9,7 +9,7 @@ function* requestRoom({ payload }) {
   try {
     if (title) {
       yield axios.post(
-        `${process.env.REACT_APP_SERVER_ROOMS_URL}/${user._id}`,
+        `${process.env.REACT_APP_SERVER_URL}/rooms/${user._id}`,
         {
           title,
           user,
@@ -22,7 +22,7 @@ function* requestRoom({ payload }) {
     }
 
     const getRoomInfo = yield axios.get(
-      `${process.env.REACT_APP_SERVER_ROOMS_URL}/${user._id}`,
+      `${process.env.REACT_APP_SERVER_URL}/rooms/${user._id}`,
       {
         headers: {
           accessAuthorization: `${getCookie("accessToken")}`,

@@ -50,6 +50,10 @@ export default function Lobby() {
     navigate("/main");
   };
 
+  const handleGoToMain = () => {
+    navigate("/main");
+  };
+
   const handleSocketEnteredGameRoom = () => {
     socketAction.checkAnotherPlayerEntered(user);
   };
@@ -59,6 +63,9 @@ export default function Lobby() {
       <Div>Game Lobby</Div>
       <button className="action-button" onClick={handleMakeRoom}>
         방 만들기
+      </button>
+      <button className="action-button" onClick={handleGoToMain}>
+        뒤로 가기
       </button>
 
       {roomInfoArray.map((roomElement) => {
