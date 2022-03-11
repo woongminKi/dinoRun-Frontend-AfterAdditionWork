@@ -22,6 +22,7 @@ export default function Lobby() {
     if (rooms) {
       socketAction.makeRoom(rooms);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (rooms) {

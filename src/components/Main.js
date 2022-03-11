@@ -26,10 +26,12 @@ export default function Main() {
     }
     dispatch(cleanUpGame());
     dispatch(closedAlarmModal());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     socketAction.waitJoinRoom(user);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
 
   const handleOpenMakeRoomModal = () => {

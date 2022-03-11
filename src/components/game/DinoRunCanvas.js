@@ -14,13 +14,11 @@ import {
 import DinoPlayer from "./character/DinoPlayer";
 import DinoTrex from "./character/DinoTrex";
 import Cactus from "./character/Cactus";
-import Bird from "./character/Bird";
 import Ground from "./background/Ground";
 
 import {
   dinoCharacterImage,
   cactusCharacterImage,
-  birdCharacterImage,
   groundImage,
 } from "./gameImages/CharaterImages";
 
@@ -46,9 +44,6 @@ export default function DinoRunCanvas() {
 
   const cactusImage = new Image();
   cactusImage.src = cactusCharacterImage;
-
-  const birdImage = new Image();
-  birdImage.src = birdCharacterImage;
 
   const backGroundImage = new Image();
   backGroundImage.src = groundImage;
@@ -101,10 +96,12 @@ export default function DinoRunCanvas() {
   useEffect(() => {
     dispatch(getMyScore(score));
     socketAction.gameScore(score);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [score]);
 
   useEffect(() => {
     dispatch(gameFinished());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCollision]);
 
   useEffect(() => {
@@ -153,7 +150,6 @@ export default function DinoRunCanvas() {
 
       if (timer % 144 === 0) {
         const cactusElement = new Cactus(context, cactusImage);
-        const birdElement = new Bird(context, birdImage);
         obstacleArray.push(cactusElement);
       }
 
@@ -186,6 +182,7 @@ export default function DinoRunCanvas() {
     return () => {
       cancelAnimationFrame(animationFrameId);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canvasRef]);
 
   useEffect(() => {

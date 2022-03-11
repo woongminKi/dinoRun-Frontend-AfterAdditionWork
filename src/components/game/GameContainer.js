@@ -15,6 +15,7 @@ export default function GameContainer() {
     if (!isLoggedIn) {
       navigate("/");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
