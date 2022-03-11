@@ -177,6 +177,7 @@ export default function DinoRunCanvas() {
       handleVideoOnPlay();
     };
     drawGame();
+    // await startVideo()
     dinoPlayer.start();
 
     return () => {
@@ -199,7 +200,7 @@ export default function DinoRunCanvas() {
         await faceApi.nets.faceLandmark68Net.loadFromUri("/models");
         await faceApi.nets.faceRecognitionNet.loadFromUri("/models");
         await faceApi.nets.faceExpressionNet.loadFromUri("/models");
-        await startVideo();
+        // await startVideo();
       } catch (err) {
         console.error(err);
       }

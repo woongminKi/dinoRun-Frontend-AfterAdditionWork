@@ -23,9 +23,9 @@ export default function GameContainer() {
       <Div>내 점수: {myScore}</Div>
       <Div>상대방 점수: {player2YourScore}</Div>
       {isDead && Number(myScore) > Number(player2YourScore) ? (
-        <div>승</div>
+        <div className="winner">승</div>
       ) : (
-        <div>패</div>
+        <div className="loser">패</div>
       )}
       <DinoRunCanvas />
     </GameWrapper>
@@ -43,6 +43,14 @@ const GameWrapper = styled.div`
   justify-content: center;
   align-items: center;
   font-family: "Teko";
+
+  .winner {
+    color: red;
+  }
+
+  .loser {
+    color: blue;
+  }
 `;
 
 const Div = styled.div``;
