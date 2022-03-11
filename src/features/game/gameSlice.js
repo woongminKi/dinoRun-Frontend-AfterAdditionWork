@@ -9,6 +9,7 @@ const gameSlice = createSlice({
     joinedRoomUser: {},
     roomParticipants: [],
     currentParticipants: [],
+    faceEmotionHappyScore: 0,
     isDead: false,
     error: null,
   },
@@ -42,6 +43,11 @@ const gameSlice = createSlice({
 
       state.isLoggedIn = false;
     },
+    getFaceEmotion: (state, action) => {
+      if (action.payload) {
+        state.faceEmotionHappyScore = action.payload[0].expressions.happy;
+      }
+    },
     getMyScore: (state, action) => {
       state.myScore = action.payload;
     },
@@ -67,6 +73,7 @@ export const {
   getGameRoomParticipants,
   gameStart,
   gameFailure,
+  getFaceEmotion,
   getMyScore,
   player2Score,
   gameFinished,

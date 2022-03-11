@@ -14,13 +14,6 @@ export default function Main() {
 
   const { isLoggedIn } = useSelector((state) => state.auth);
   const user = useSelector((state) => state.userInfo.user);
-  const rooms = useSelector((state) => state.room.rooms);
-  const {
-    waitParticipants,
-    playerIsEntered,
-    player1IsEntered,
-    player2IsEntered,
-  } = useSelector((state) => state.room);
 
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isMadeRoom, setIsMadeRoom] = useState(false);
@@ -108,7 +101,6 @@ const Container = styled.div`
   left: 0;
   width: 100%;
   height: 100vh;
-  position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: center;

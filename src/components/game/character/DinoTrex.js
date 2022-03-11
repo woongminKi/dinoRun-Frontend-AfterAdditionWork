@@ -1,23 +1,8 @@
-import { dinoCharacterImage } from "../gameImages/CharaterImages";
 import Cactus from "./Cactus";
-
-const STATUS = Object.freeze({
-  START: "START",
-  JUMP: "JUMP",
-  DUCK_1: "DUCK_1",
-  DUCK_2: "DUCK_2",
-  CRASH: "CRASH",
-});
 
 class DinoTrex {
   requestAnimation;
   cactus = new Cactus();
-
-  config = {
-    STATUS: {
-      START: { img: dinoCharacterImage },
-    },
-  };
 
   constructor(ctx, image) {
     this.x = 10;
@@ -28,8 +13,6 @@ class DinoTrex {
     this.image = image;
     this.jumpTime = 0;
     this.jumpState = false;
-
-    this.status = STATUS.START;
   }
 
   jump() {
