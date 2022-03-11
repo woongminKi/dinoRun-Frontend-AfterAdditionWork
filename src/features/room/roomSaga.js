@@ -8,18 +8,21 @@ function* requestRoom({ payload }) {
 
   try {
     if (title) {
-      yield axios.post(`http://localhost:8000/rooms/${user._id}`, {
-        title,
-        user,
-        headers: {
-          accessAuthorization: `${getCookie("accessToken")}`,
-          refreshAuthorization: `${getCookie("refreshToken")}`,
-        },
-      });
+      yield axios.post(
+        `${process.env.REACT_APP_SERVER_ROOMS_URL}/${user._id}`,
+        {
+          title,
+          user,
+          headers: {
+            accessAuthorization: `${getCookie("accessToken")}`,
+            refreshAuthorization: `${getCookie("refreshToken")}`,
+          },
+        }
+      );
     }
 
     const getRoomInfo = yield axios.get(
-      `http://localhost:8000/rooms/${user._id}`,
+      `${process.env.REACT_APP_SERVER_ROOMS_URL}/${user._id}`,
       {
         headers: {
           accessAuthorization: `${getCookie("accessToken")}`,

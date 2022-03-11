@@ -12,7 +12,7 @@ function* getJoinedRoomPeople({ payload }) {
 
   try {
     const getJoinedRoomData = yield axios.get(
-      `http://localhost:8000/rooms/${user._id}/game`,
+      `${process.env.REACT_APP_SERVER_ROOMS_URL}/${user._id}/game`,
       {
         headers: {
           roomid,
