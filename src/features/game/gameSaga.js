@@ -4,7 +4,7 @@ import {
   requestJoinRoomData,
   getGameRoomParticipants,
   gameFailure,
-} from "../slice/gameSlice";
+} from "./gameSlice";
 import { getCookie } from "../../util/cookies";
 
 function* getJoinedRoomPeople({ payload }) {

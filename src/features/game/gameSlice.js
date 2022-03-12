@@ -55,7 +55,12 @@ const gameSlice = createSlice({
       state.player2YourScore = action.payload;
     },
     cleanUpGame: (state) => {
+      state.isJoined = false;
+      state.isReady = false;
       state.isGameStart = false;
+      state.joinedRoomUser = {};
+      state.roomParticipants = [];
+      state.currentParticipants = [];
       state.isDead = false;
       state.error = null;
     },

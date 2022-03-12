@@ -1,10 +1,6 @@
 import axios from "axios";
 import { put, all, fork, takeLatest } from "redux-saga/effects";
-import {
-  requestRoomData,
-  makeRoomSuccess,
-  roomFailure,
-} from "../slice/roomSlice";
+import { requestRoomData, makeRoomSuccess, roomFailure } from "./roomSlice";
 import { getCookie, setCookie } from "../../util/cookies";
 
 function* requestRoom({ payload }) {
