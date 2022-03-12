@@ -6,7 +6,7 @@ import {
   requestRoomData,
   gameStart,
   player2Score,
-} from "../features/game/gameSlice";
+} from "../features/slice/gameSlice";
 import {
   waitJoinRoom,
   updateRoomData,
@@ -14,7 +14,7 @@ import {
   player2EnterRoom,
   getOutRoomData,
   deleteRoomData,
-} from "../features/room/roomSlice";
+} from "../features/slice/roomSlice";
 
 export const socket = io.connect(process.env.REACT_APP_SERVER_URL, {
   path: "/socket.io",

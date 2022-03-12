@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { auth } from "../firebase";
-import { logoutRequest } from "../features/auth/authSlice";
+import { logoutRequest } from "../features/slice/authSlice";
 import { removeCookie } from "../util/cookies";
 
 export default function Header() {

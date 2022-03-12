@@ -5,8 +5,8 @@ import styled from "styled-components";
 
 import MakeRoomModal from "./MakeRoomModal";
 import { socketAction } from "../modules/useSocket";
-import { requestRoomData, closedAlarmModal } from "../features/room/roomSlice";
-import { cleanUpGame } from "../features/game/gameSlice";
+import { requestRoomData, closedAlarmModal } from "../features/slice/roomSlice";
+import { cleanUpGame } from "../features/slice/gameSlice";
 
 export default function Main() {
   const dispatch = useDispatch();
