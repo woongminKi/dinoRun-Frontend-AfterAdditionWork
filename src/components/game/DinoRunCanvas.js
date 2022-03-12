@@ -9,7 +9,7 @@ import {
   getMyScore,
   gameFinished,
   getFaceEmotion,
-} from "../../features/game/gameSlice";
+} from "../../features/slice/gameSlice";
 
 import DinoPlayer from "./character/DinoPlayer";
 import DinoTrex from "./character/DinoTrex";

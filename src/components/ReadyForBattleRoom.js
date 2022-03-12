@@ -4,9 +4,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import AlarmModal from "./modal/AlarmModal";
-import { closedAlarmModal } from "../features/room/roomSlice";
+import { closedAlarmModal } from "../features/slice/roomSlice";
 import { socketAction } from "../modules/useSocket";
-import { cleanUpGame } from "../features/game/gameSlice";
+import { cleanUpGame } from "../features/slice/gameSlice";
 
 export default function ReadyForBattleRoom() {
   const dispatch = useDispatch();

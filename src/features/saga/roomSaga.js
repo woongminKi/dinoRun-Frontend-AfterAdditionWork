@@ -1,6 +1,10 @@
 import axios from "axios";
 import { put, all, fork, takeLatest } from "redux-saga/effects";
-import { requestRoomData, makeRoomSuccess, roomFailure } from "./roomSlice";
+import {
+  requestRoomData,
+  makeRoomSuccess,
+  roomFailure,
+} from "../slice/roomSlice";
 import { getCookie, setCookie } from "../../util/cookies";
 
 function* requestRoom({ payload }) {
@@ -8,21 +12,18 @@ function* requestRoom({ payload }) {
 
   try {
     if (title) {
-      yield axios.post(
-        `${process.env.REACT_APP_SERVER_URL}/rooms/${user._id}`,
-        {
-          title,
-          user,
-          headers: {
-            accessAuthorization: `${getCookie("accessToken")}`,
-            refreshAuthorization: `${getCookie("refreshToken")}`,
-          },
-        }
-      );
+      yield axios.post(`${process.env.REACT_APP_SERVER_URL}/rooms`, {
+        title,
+        user,
+        headers: {
+          accessAuthorization: `${getCookie("accessToken")}`,
+          refreshAuthorization: `${getCookie("refreshToken")}`,
+        },
+      });
     }
 
     const getRoomInfo = yield axios.get(
-      `${process.env.REACT_APP_SERVER_URL}/rooms/${user._id}`,
+      `${process.env.REACT_APP_SERVER_URL}/rooms`,
       {
         headers: {
           accessAuthorization: `${getCookie("accessToken")}`,

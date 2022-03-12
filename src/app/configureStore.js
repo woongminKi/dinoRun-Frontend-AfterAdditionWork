@@ -4,15 +4,14 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage/session";
 
 import { all } from "redux-saga/effects";
-import { authSaga } from "../features/auth/authSaga";
-import { roomSaga } from "../features/room/roomSaga";
-import { gameSaga } from "../features/game/gameSaga";
+import { authSaga } from "../features/saga/authSaga";
+import { roomSaga } from "../features/saga/roomSaga";
 import { prePlayGameSocketSaga } from "../modules/useSocket";
 
-import auth from "../features/auth/authSlice";
-import room from "../features/room/roomSlice";
-import userInfo from "../features/userInfo/userInfoSlice";
-import game from "../features/game/gameSlice";
+import auth from "../features/slice/authSlice";
+import room from "../features/slice/roomSlice";
+import userInfo from "../features/slice/userInfoSlice";
+import game from "../features/slice/gameSlice";
 
 const sagaMiddleware = createSagaMiddleWare();
 
@@ -31,7 +30,7 @@ const reducer = combineReducers({
 const persistedReducer = persistReducer(persistConfig, reducer);
 
 function* rootSaga() {
-  yield all([authSaga(), roomSaga(), gameSaga(), prePlayGameSocketSaga()]);
+  yield all([authSaga(), roomSaga(), prePlayGameSocketSaga()]);
 }
 
 const store = configureStore({
