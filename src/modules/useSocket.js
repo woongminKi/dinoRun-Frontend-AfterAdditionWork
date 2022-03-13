@@ -6,7 +6,7 @@ import {
   requestRoomData,
   gameStart,
   player2Score,
-} from "../features/slice/gameSlice";
+} from "../features/game/gameSlice";
 import {
   waitJoinRoom,
   updateRoomData,
@@ -14,11 +14,14 @@ import {
   player2EnterRoom,
   getOutRoomData,
   deleteRoomData,
-} from "../features/slice/roomSlice";
+} from "../features/room/roomSlice";
 
 export const socket = io.connect(process.env.REACT_APP_SERVER_URL, {
   path: "/socket.io",
   transports: ["websocket"],
+  cors: {
+    origin: process.env.REACT_APP_SERVER_URL,
+  },
 });
 
 export const socketAction = {

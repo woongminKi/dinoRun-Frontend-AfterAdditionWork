@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+
 import { socketAction } from "../modules/useSocket";
+import { closedAlarmModal } from "../features/room/roomSlice";
 
 export default function Lobby() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { isLoggedIn } = useSelector((state) => state.auth);
@@ -22,6 +25,8 @@ export default function Lobby() {
     if (rooms) {
       socketAction.makeRoom(rooms);
     }
+
+    dispatch(closedAlarmModal());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

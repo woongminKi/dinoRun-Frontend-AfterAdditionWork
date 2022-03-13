@@ -4,9 +4,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import AlarmModal from "./modal/AlarmModal";
-import { closedAlarmModal } from "../features/slice/roomSlice";
+import { closedAlarmModal } from "../features/room/roomSlice";
 import { socketAction } from "../modules/useSocket";
-import { cleanUpGame } from "../features/slice/gameSlice";
+import { cleanUpGame } from "../features/game/gameSlice";
 
 export default function ReadyForBattleRoom() {
   const dispatch = useDispatch();
@@ -23,6 +23,7 @@ export default function ReadyForBattleRoom() {
     player2IsEntered,
     isDeletedRoom,
   } = useSelector((state) => state.room);
+
   const user = useSelector((state) => state.userInfo.user);
   const game = useSelector((state) => state.game);
   const [isSecondEntry, setIsSecondEntry] = useState(false);

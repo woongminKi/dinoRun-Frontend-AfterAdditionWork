@@ -22,7 +22,9 @@ export default function GameContainer() {
     <GameWrapper>
       <Div>내 점수: {myScore}</Div>
       <Div>상대방 점수: {player2YourScore}</Div>
-      {isDead && Number(myScore) > Number(player2YourScore) ? (
+      {isDead && Number(myScore) === Number(player2YourScore) ? (
+        <div className="same">무승부</div>
+      ) : Number(myScore) > Number(player2YourScore) ? (
         <div className="winner">승</div>
       ) : (
         <div className="loser">패</div>

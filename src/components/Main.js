@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import MakeRoomModal from "./MakeRoomModal";
+import MakeRoomModal from "./modal/MakeRoomModal";
 import { socketAction } from "../modules/useSocket";
-import { requestRoomData, closedAlarmModal } from "../features/slice/roomSlice";
-import { cleanUpGame } from "../features/slice/gameSlice";
+import { requestRoomData, closedAlarmModal } from "../features/room/roomSlice";
+import { cleanUpGame } from "../features/game/gameSlice";
 
 export default function Main() {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ export default function Main() {
     dispatch(cleanUpGame());
     dispatch(closedAlarmModal());
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isLoggedIn]);
 
   useEffect(() => {
     socketAction.waitJoinRoom(user);

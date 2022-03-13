@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { loginRequest } from "../features/slice/authSlice";
+import { loginRequest } from "../features/auth/authSlice";
 import { auth, signInWithGoogle } from "../firebase";
 
 export default function Home() {
@@ -25,7 +25,7 @@ export default function Home() {
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isLoggedIn]);
 
   return (
     <Container>

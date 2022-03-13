@@ -6,8 +6,8 @@ import {
   loginSuccess,
   loginFailure,
   logoutRequest,
-} from "../slice/authSlice";
-import { getUserData, logoutUserData } from "../slice/userInfoSlice";
+} from "./authSlice";
+import { getUserData, logoutUserData } from "../userInfo/userInfoSlice";
 import { setCookie } from "../../util/cookies";
 
 function* loginUser({ payload }) {
