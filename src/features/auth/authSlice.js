@@ -4,7 +4,6 @@ const authSlice = createSlice({
   name: "auth",
   initialState: {
     isLoggedIn: false,
-    isSignUp: false,
     error: null,
   },
   reducers: {
@@ -12,10 +11,7 @@ const authSlice = createSlice({
       state.isLoggedIn = false;
     },
     loginSuccess: (state, action) => {
-      const { message } = action.payload;
-
       state.isLoggedIn = true;
-      state.isSignUp = message === "유저 등록 성공" ? true : false;
     },
     loginFailure: (state, action) => {
       const { message, status } = action.payload;
@@ -29,7 +25,6 @@ const authSlice = createSlice({
     },
     logoutRequest: (state) => {
       state.isLoggedIn = false;
-      state.isSignUp = false;
     },
   },
 });

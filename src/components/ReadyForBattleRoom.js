@@ -23,6 +23,7 @@ export default function ReadyForBattleRoom() {
     player2IsEntered,
     isDeletedRoom,
   } = useSelector((state) => state.room);
+
   const user = useSelector((state) => state.userInfo.user);
   const game = useSelector((state) => state.game);
   const [isSecondEntry, setIsSecondEntry] = useState(false);

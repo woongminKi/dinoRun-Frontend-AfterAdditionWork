@@ -19,6 +19,9 @@ import {
 export const socket = io.connect(process.env.REACT_APP_SERVER_URL, {
   path: "/socket.io",
   transports: ["websocket"],
+  cors: {
+    origin: process.env.REACT_APP_SERVER_URL,
+  },
 });
 
 export const socketAction = {

@@ -8,8 +8,9 @@ const gameSlice = createSlice({
     isGameStart: false,
     joinedRoomUser: {},
     roomParticipants: [],
-    currentParticipants: [],
     faceEmotionHappyScore: 0,
+    myScore: 0,
+    player2YourScore: 0,
     isDead: false,
     error: null,
   },
@@ -20,7 +21,6 @@ const gameSlice = createSlice({
     },
     requestJoinRoomData: (state) => {
       state.isJoined = true;
-      state.roomParticipants = [];
     },
     getGameRoomParticipants: (state, action) => {
       state.roomParticipants = state.roomParticipants.concat(
@@ -59,8 +59,10 @@ const gameSlice = createSlice({
       state.isReady = false;
       state.isGameStart = false;
       state.joinedRoomUser = {};
+      state.faceEmotionHappyScore = 0;
+      state.myScore = 0;
+      state.player2YourScore = 0;
       state.roomParticipants = [];
-      state.currentParticipants = [];
       state.isDead = false;
       state.error = null;
     },

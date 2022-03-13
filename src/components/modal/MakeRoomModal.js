@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { WHITE, BLACK, MAIN_COLOR_1 } from "../util/styles";
+import { WHITE, BLACK, MAIN_COLOR_1 } from "../../util/styles";
 
 export default function MakeRoomModal({ onMake, onClose, children }) {
   return (
@@ -9,8 +9,12 @@ export default function MakeRoomModal({ onMake, onClose, children }) {
       <Dimmed onClick={onClose} />
       <MakeRoomMadalWrapper>
         <Div>{children}</Div>
-        <Button onClick={onMake}>레알 만들기</Button>
-        <Button onClick={onClose}>취소</Button>
+        <Button data-testid="real-make-button" onClick={onMake}>
+          레알 만들기
+        </Button>
+        <Button data-testid="cancel-button" onClick={onClose}>
+          취소
+        </Button>
       </MakeRoomMadalWrapper>
     </>
   );
