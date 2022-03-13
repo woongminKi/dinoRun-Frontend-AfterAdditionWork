@@ -1,70 +1,129 @@
-# Getting Started with Create React App
+# 🦖 Dino Run
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+디노런은 인터넷 연결이 안 됐을 때 크롬에서 할 수 있는 구글 공룡 게임을 온라인화 해 친구들과 함께 즐길 수 있는 게임입니다.
+키보드 조작도 가능하지만, 안면 인식으로 감정에 따라 공룡 캐릭터를 조작할 수도 있습니다.
 
-## Available Scripts
+## 📈Preview
 
-In the project directory, you can run:
+https://user-images.githubusercontent.com/96522144/158065592-c8e80a69-4aaf-4ada-82d4-909f59805ad0.mov
 
-### `npm start`
+배포 사이트 : https://www.dinorun.site/
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🚀 ShortCut
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- 💡 Motivation
+- ✅ Features
+- 📅 Schedule
+- 🖥 Tech Stack
+- 🕹 Getting Started
+- 🤔 Why we used it
+- 🔥 Challenge
 
-### `npm test`
+## 💡 Motivation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+이전에 쿠키런을 재밌게 했으며 이와 유사하지만 인터넷 연결이 안 될 때만 할 수 있는 구글 공룡 게임을 온라인으로 친구들과 함께 플레이하면 어떨까 하는 생각이 들어 프로젝트를 기획하게 됐습니다.
 
-### `npm run build`
+모니터를 보며 키보드로 조작을 하는 게임은 많지만 내 얼굴을 보며 감정에 따라 캐릭터가 움직이는 게임은 많이 없다고 생각했습니다. 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+이를 친구들과 함께 할 수 있다면 보다 주도적으로 재미있는 게임을 할 수 있을 것이라 생각했습니다. 안면 인식&감정 판별에 따른 게임 조작을 할 수 있게 해 게임의 재미를 향상시켰습니다.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## ✅ Features
 
-### `npm run eject`
+플레어이어는 방을 생성해 상대 플레이어와 실시간 대전을 할 수 있습니다.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+방장은 게임을 시작, 방 삭제를 할 수 있으며 게임 시작을 누르면 게임이 시작되고, 방 삭제를 누르면 상대 플레이어에게 방이 삭제됐다는 알림이 뜹니다.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+상대 플레이어가 게임 시작 전 방을 나가면 방장 화면에는 플레이어를 기다리는 중이라는 화면으로 바뀌면서 플레이어가 사라집니다.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+게임이 시작하면 카메라가 켜지며 안면 인식을 시작함과 동시에 웃는 얼굴(Happy)일 때 캐릭터가 점프를 합니다. 스페이스바로도 조작 할 수 있습니다.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+실시간으로 상대방의 점수가 내 화면에 나타나며 그에 따른 승 패 여부도 실시간으로 확인 할 수 있습니다.
 
-## Learn More
+장애물에 부딪히면 게임이 종료되며 방을 나갈 수 있습니다.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 📅 Schedule
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+2022.02.21 ~ 2022.03.13(21일)
+총 3주 동안 프로젝트를 진행했습니다.
 
-### Code Splitting
+### 1주차(2022.02.21 ~ 2022.02.25) - 기획 및 설계
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- 아이디어 검토
+- DB Schema 설계
+- Mock up Design
+- 기술 스택 조사 및 선정
+- API 명세 작성
+- Task Card 작성
 
-### Analyzing the Bundle Size
+### 2,3주차(2022.02.26 ~. 2022.03.13) - 개발 및 마무리
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- Frontend, Backend Setup
+- Frontend
+    - 로그인 기능
+    - face-api로 안면, 감정 인식에 따른 캐릭터 점프 기능(키보드 조작도 가능)
+    - [Socket.io](http://Socket.io) 실시간 통신
+    - Redux-Saga 도입
+- Backend
+    - 로그인 정보 GET, POST
+    - 방 정보 GET, POST, DELETE
+    - Socket 통신
+- Test Code 작성
+- CSS 작업
+- Frontend 배포 (Netlify)
+- Backend 배포 (AWS Elastic Beanstalk)
+- README 작성
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 🖥 Tech Stack
 
-### Advanced Configuration
+### Frontend
+- Javascript
+- React
+- Redux
+- Redux-saga
+- Redux-toolkit
+- socket.io-client
+- Goole login api(+firebase)
+- styled-component
+- jest
+- react-test-library
+- face-api
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Backend
+- node.js
+- mongoDB
+- Express
+- socket.io
 
-### Deployment
+### Convention
+- prettier
+- eslint
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## 🕹 Getting Started
 
-### `npm run build` fails to minify
+### Installation
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Local 환경에서 실행하기 위해서 몇 가지 사전 준비가 필요합니다.
+- 각 Repository를 Clone 한 후, .env 파일에 환경 변수를 입력해주세요.
+
+```
+git clone https://github.com/woongminKi/dino-run-frontend.git
+npm install
+npm run start
+```
+
+```
+git clone https://github.com/woongminKi/dino-run-backend.git
+npm install
+npm run start
+```
+
+
+## 🤔 Why (About Tech Stack)
+
+
+
+## 🔥 Challenge
+
+
