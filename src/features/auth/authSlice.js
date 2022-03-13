@@ -10,7 +10,7 @@ const authSlice = createSlice({
     loginRequest: (state) => {
       state.isLoggedIn = false;
     },
-    loginSuccess: (state, action) => {
+    loginSuccess: (state) => {
       state.isLoggedIn = true;
     },
     loginFailure: (state, action) => {
