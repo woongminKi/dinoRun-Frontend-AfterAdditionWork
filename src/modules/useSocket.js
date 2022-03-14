@@ -12,7 +12,8 @@ import {
   updateRoomData,
   player1EnterRoom,
   player2EnterRoom,
-  getOutRoomData,
+  player1OutRoom,
+  player2OutRoom,
   deleteRoomData,
 } from "../features/room/roomSlice";
 
@@ -63,12 +64,12 @@ function createSocketChannel(socket) {
       emit(updateRoomData(rooms));
     });
     socket.on("checkAnotherPlayerEntered", (anotherUser, userDbData) => {
-      if (anotherUser.email === userDbData[1].email) {
-        emit(player2EnterRoom(anotherUser));
-      }
-
       if (anotherUser.email === userDbData[0].email) {
         emit(player1EnterRoom(anotherUser));
+      }
+
+      if (anotherUser.email === userDbData[1].email) {
+        emit(player2EnterRoom(anotherUser));
       }
     });
     socket.on("gameStart", (id) => {
@@ -77,8 +78,13 @@ function createSocketChannel(socket) {
     socket.on("gameScore", (score) => {
       emit(player2Score(score));
     });
-    socket.on("leaveRoom", (user) => {
-      emit(getOutRoomData(user));
+    socket.on("leaveRoom", (user, userDbData) => {
+      if (user.email === userDbData[0].email) {
+        emit(player1OutRoom());
+      }
+      if (user.email === userDbData[1].email) {
+        emit(player2OutRoom());
+      }
     });
     socket.on("deleteRoom", () => {
       emit(deleteRoomData());
