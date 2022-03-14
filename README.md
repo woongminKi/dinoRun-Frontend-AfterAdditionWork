@@ -47,7 +47,7 @@ https://user-images.githubusercontent.com/96522144/158065592-c8e80a69-4aaf-4ada-
 2022.02.21 ~ 2022.03.13(21일)
 총 3주 동안 프로젝트를 진행했습니다.
 
-### 1주차(2022.02.21 ~ 2022.02.25) - 기획 및 설계
+### 1주차 - 기획 및 설계
 
 - 아이디어 검토
 - DB Schema 설계
@@ -56,7 +56,7 @@ https://user-images.githubusercontent.com/96522144/158065592-c8e80a69-4aaf-4ada-
 - API 명세 작성
 - Task Card 작성
 
-### 2,3주차(2022.02.26 ~. 2022.03.13) - 개발 및 마무리
+### 2,3주차 - 개발 및 마무리
 
 - Frontend, Backend Setup
 - Frontend
