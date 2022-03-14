@@ -4,11 +4,8 @@ const gameSlice = createSlice({
   name: "game",
   initialState: {
     isJoined: false,
-    isReady: false,
     isGameStart: false,
     joinedRoomUser: {},
-    roomParticipants: [],
-    currentParticipants: [],
     faceEmotionHappyScore: 0,
     myScore: 0,
     player2YourScore: 0,
@@ -20,30 +17,11 @@ const gameSlice = createSlice({
       state.isJoined = true;
       state.joinedRoomUser = action.payload;
     },
-    requestJoinRoomData: (state) => {
-      state.isJoined = true;
-      state.roomParticipants = [];
-    },
-    getGameRoomParticipants: (state, action) => {
-      state.roomParticipants = state.roomParticipants.concat(
-        action.payload.data.currentPeople
-      );
-    },
     gameStart: (state) => {
       state.isGameStart = true;
     },
     gameFinished: (state) => {
       state.isDead = true;
-    },
-    gameFailure: (state, action) => {
-      const { message, status } = action.payload;
-
-      state.error = {
-        message,
-        status,
-      };
-
-      state.isLoggedIn = false;
     },
     getFaceEmotion: (state, action) => {
       if (action.payload) {
@@ -58,11 +36,11 @@ const gameSlice = createSlice({
     },
     cleanUpGame: (state) => {
       state.isJoined = false;
-      state.isReady = false;
       state.isGameStart = false;
       state.joinedRoomUser = {};
-      state.roomParticipants = [];
-      state.currentParticipants = [];
+      state.faceEmotionHappyScore = 0;
+      state.myScore = 0;
+      state.player2YourScore = 0;
       state.isDead = false;
       state.error = null;
     },
@@ -71,10 +49,7 @@ const gameSlice = createSlice({
 
 export const {
   requestRoomData,
-  requestJoinRoomData,
-  getGameRoomParticipants,
   gameStart,
-  gameFailure,
   getFaceEmotion,
   getMyScore,
   player2Score,

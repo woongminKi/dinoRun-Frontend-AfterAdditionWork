@@ -2,7 +2,6 @@ import persistedReducer, {
   requestRoomData,
   gameStart,
   gameFinished,
-  gameFailure,
   getFaceEmotion,
   getMyScore,
   player2Score,
@@ -43,12 +42,6 @@ describe("gameSlice", () => {
     state = persistedReducer(state, gameFinished(true));
 
     expect(state.isDead).toEqual(true);
-  });
-
-  it("check game fail", () => {
-    state = persistedReducer(state, gameFailure(true));
-
-    expect(state.isGameStart).toEqual(false);
   });
 
   it("check face emotion score", () => {
