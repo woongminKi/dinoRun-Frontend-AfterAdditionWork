@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -26,7 +26,6 @@ export default function ReadyForBattleRoom() {
 
   const user = useSelector((state) => state.userInfo.user);
   const game = useSelector((state) => state.game);
-  const [isSecondEntry, setIsSecondEntry] = useState(false);
 
   const profileImage = user.imageUrl;
   const roomInfoArray = [];
@@ -82,7 +81,6 @@ export default function ReadyForBattleRoom() {
 
   const handleGetOutRoomButton = () => {
     socketAction.leaveRoom(roomid, user);
-    setIsSecondEntry(true);
     navigate("/main");
   };
 
@@ -128,9 +126,7 @@ export default function ReadyForBattleRoom() {
       </button>
       <hr />
 
-      {(!player1IsEntered || !player2IsEntered) &&
-      playerIsEntered &&
-      !isSecondEntry ? (
+      {(!player1IsEntered || !player2IsEntered) && playerIsEntered ? (
         <>
           <div>상대방:{waitParticipants[0].displayName}</div>
           <div>
@@ -144,20 +140,6 @@ export default function ReadyForBattleRoom() {
         </>
       ) : (
         <div>상대 기다리는 중...</div>
-      )}
-
-      {isSecondEntry && (
-        <>
-          <div>상대방:{waitParticipants[0].displayName}</div>
-          <div>
-            {
-              <ImageDiv
-                className="profile-image"
-                style={{ background: `url(${waitParticipants[0].imageUrl})` }}
-              />
-            }
-          </div>
-        </>
       )}
 
       {isDeletedRoom && (

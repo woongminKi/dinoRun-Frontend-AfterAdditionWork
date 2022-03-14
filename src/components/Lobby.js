@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -14,7 +14,6 @@ export default function Lobby() {
   const { rooms } = useSelector((state) => state.room);
   const user = useSelector((state) => state.userInfo.user);
 
-  const [isClickEnterRoom, setIsClickEnterRoom] = useState(false);
   const roomInfoArray = [];
 
   useEffect(() => {
@@ -46,8 +45,12 @@ export default function Lobby() {
     });
   }
 
+  const handleSocketEnteredGameRoom = () => {
+    socketAction.checkAnotherPlayerEntered(user);
+  };
+
   const handleEnteredGameRoom = (id) => {
-    setIsClickEnterRoom(true);
+    handleSocketEnteredGameRoom();
     navigate(`/readyBattleRoom/${id}`);
   };
 
@@ -57,10 +60,6 @@ export default function Lobby() {
 
   const handleGoToMain = () => {
     navigate("/main");
-  };
-
-  const handleSocketEnteredGameRoom = () => {
-    socketAction.checkAnotherPlayerEntered(user);
   };
 
   return (
@@ -80,12 +79,7 @@ export default function Lobby() {
             onClick={() => handleEnteredGameRoom(roomElement.id, user)}
           >
             <div className="room-title">제목: {roomElement.title}</div>
-            <button
-              className="action-button"
-              onClick={handleSocketEnteredGameRoom}
-            >
-              입장 하기
-            </button>
+            <button className="action-button">입장 하기</button>
           </CardWrapper>
         );
       })}

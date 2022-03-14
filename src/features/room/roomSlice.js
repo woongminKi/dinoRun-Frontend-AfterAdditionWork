@@ -42,6 +42,14 @@ const roomSlice = createSlice({
       state.player2IsEntered = true;
       state.playerIsEntered = true;
     },
+    player1OutRoom: (state) => {
+      state.player1IsEntered = false;
+      state.playerIsEntered = false;
+    },
+    player2OutRoom: (state) => {
+      state.player2IsEntered = false;
+      state.playerIsEntered = false;
+    },
     deleteRoomData: (state) => {
       state.playerIsEntered = false;
       state.isMakeRoomSuccess = false;
@@ -49,9 +57,6 @@ const roomSlice = createSlice({
     },
     closedAlarmModal: (state) => {
       state.isDeletedRoom = false;
-    },
-    getOutRoomData: (state) => {
-      state.playerIsEntered = false;
     },
     roomFailure: (state, action) => {
       const { message, status } = action.payload;
@@ -74,9 +79,10 @@ export const {
   waitJoinRoom,
   player1EnterRoom,
   player2EnterRoom,
+  player1OutRoom,
+  player2OutRoom,
   deleteRoomData,
   closedAlarmModal,
-  getOutRoomData,
   roomFailure,
 } = roomSlice.actions;
 

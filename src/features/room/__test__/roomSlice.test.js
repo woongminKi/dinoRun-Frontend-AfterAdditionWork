@@ -6,9 +6,10 @@ import persistedReducer, {
   waitJoinRoom,
   player1EnterRoom,
   player2EnterRoom,
+  player1OutRoom,
+  player2OutRoom,
   deleteRoomData,
   closedAlarmModal,
-  getOutRoomData,
   roomFailure,
 } from "../roomSlice";
 
@@ -193,6 +194,20 @@ describe("roomSlice", () => {
     expect(state.playerIsEntered).toEqual(true);
   });
 
+  it("check player1 is outed", () => {
+    state = persistedReducer(state, player1OutRoom(true));
+
+    expect(state.player1IsEntered).toEqual(false);
+    expect(state.playerIsEntered).toEqual(false);
+  });
+
+  it("check player2 is outed", () => {
+    state = persistedReducer(state, player2OutRoom(true));
+
+    expect(state.player2IsEntered).toEqual(false);
+    expect(state.playerIsEntered).toEqual(false);
+  });
+
   it("check delete room data", () => {
     state = persistedReducer(state, deleteRoomData());
 
@@ -205,12 +220,6 @@ describe("roomSlice", () => {
     state = persistedReducer(state, closedAlarmModal());
 
     expect(state.isDeletedRoom).toEqual(false);
-  });
-
-  it("check closed alarm modal", () => {
-    state = persistedReducer(state, getOutRoomData());
-
-    expect(state.playerIsEntered).toEqual(false);
   });
 
   it("check make room fail", () => {

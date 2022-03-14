@@ -17,7 +17,6 @@ export default function Main() {
 
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isMadeRoom, setIsMadeRoom] = useState(false);
-  const [isClickMadeRoom, setIsClickMadeRoom] = useState(false);
   const [title, setTitle] = useState("");
 
   useEffect(() => {
@@ -42,7 +41,6 @@ export default function Main() {
   const handleMakeRoomButton = () => {
     setIsMadeRoom(false);
     dispatch(requestRoomData({ title, user }));
-    setIsClickMadeRoom(true);
     navigate("/lobby");
   };
 
