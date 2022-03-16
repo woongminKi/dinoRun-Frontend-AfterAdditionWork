@@ -65,12 +65,14 @@ export default function Lobby() {
   return (
     <Container>
       <Div>Game Lobby</Div>
-      <button className="action-button" onClick={handleMakeRoom}>
-        방 만들기
-      </button>
-      <button className="action-button" onClick={handleGoToMain}>
-        뒤로 가기
-      </button>
+      <ButtonWrapper>
+        <button className="action-button" onClick={handleMakeRoom}>
+          방 만들기
+        </button>
+        <button className="action-button" onClick={handleGoToMain}>
+          뒤로 가기
+        </button>
+      </ButtonWrapper>
 
       {roomInfoArray.map((roomElement) => {
         return (
@@ -78,7 +80,7 @@ export default function Lobby() {
             key={roomElement.id}
             onClick={() => handleEnteredGameRoom(roomElement.id, user)}
           >
-            <div className="room-title">제목: {roomElement.title}</div>
+            <div className="room-title">제목 : {roomElement.title}</div>
             <button className="action-button">입장 하기</button>
           </CardWrapper>
         );
@@ -91,11 +93,20 @@ const Div = styled.div`
   font-size: 50px;
 `;
 
+const ButtonWrapper = styled.div`
+  display: flex;
+
+  .action-button {
+    margin-left: 5px;
+  }
+`;
+
 const CardWrapper = styled.div`
-  border: 1px solid black;
   margin-top: 5px;
-  width: 150px;
+  width: 250px;
   height: 70px;
+  border: 1px solid black;
+  border-radius: 10px;
   text-align: center;
 `;
 

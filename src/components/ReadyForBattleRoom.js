@@ -93,14 +93,14 @@ export default function ReadyForBattleRoom() {
     <RoomContentsWrapper>
       {roomInfoArray.map((roomElement) => {
         if (roomid === roomElement.id) {
-          return <div>방 제목: {roomElement.title}</div>;
+          return <div>방 제목 : {roomElement.title}</div>;
         }
       })}
 
       {roomInfoArray.map((roomElement) => {
         if (roomElement.author.id === user._id && roomid === roomElement.id) {
           return (
-            <>
+            <ButtonWrapper>
               <button
                 className="action-button"
                 onClick={handleDeleteRoomButton}
@@ -110,12 +110,12 @@ export default function ReadyForBattleRoom() {
               <button className="action-button" onClick={handleGameStartButton}>
                 게임 시작
               </button>
-            </>
+            </ButtonWrapper>
           );
         }
       })}
 
-      <Div>나: {user.displayName}</Div>
+      <Div>나 : {user.displayName}</Div>
       <ImageDiv
         className="profile-image"
         style={{ background: `url(${profileImage})` }}
@@ -128,7 +128,7 @@ export default function ReadyForBattleRoom() {
 
       {(!player1IsEntered || !player2IsEntered) && playerIsEntered ? (
         <>
-          <div>상대방:{waitParticipants[0].displayName}</div>
+          <div>상대방 : {waitParticipants[0].displayName}</div>
           <div>
             {
               <ImageDiv
@@ -151,6 +151,14 @@ export default function ReadyForBattleRoom() {
 
 const Div = styled.div`
   font-weight: 400;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+
+  .action-button {
+    margin-left: 5px;
+  }
 `;
 
 const ImageDiv = styled.div`
