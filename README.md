@@ -30,15 +30,24 @@ https://user-images.githubusercontent.com/96522144/158065592-c8e80a69-4aaf-4ada-
 
 플레어이어는 방을 생성해 상대 플레이어와 실시간 대전을 할 수 있습니다.
 
+![방만들기에서 입장까지](https://user-images.githubusercontent.com/96522144/159103191-218f8f2a-d9fb-4770-afb1-83982236c771.gif)
+
 방장은 게임을 시작, 방 삭제를 할 수 있으며 게임 시작을 누르면 게임이 시작됩니다.
+
 방 삭제를 누르면 상대 플레이어에게 방이 삭제됐다는 알림이 뜹니다.
+
 방 나가기를 누르면 누른 플레이어는 로비로 나가게 되고, 상대방 화면에서는 사라지게 됩니다.
+![방삭제와 나가기](https://user-images.githubusercontent.com/96522144/159103217-d20b567a-5224-4593-aaae-92156e8d8ed6.gif)
+
 
 게임이 시작하면 카메라가 켜지며 안면 인식을 시작함과 동시에 웃는 얼굴(Happy)일 때 캐릭터가 점프를 합니다. 스페이스바로도 조작 할 수 있습니다.
 
 실시간으로 상대방의 점수가 화면에 나타나며 그에 따른 승 패 여부도 실시간으로 확인 할 수 있습니다.
 
 장애물에 부딪히면 게임이 종료되며 방을 나갈 수 있습니다.
+![게임 시연](https://user-images.githubusercontent.com/96522144/159103322-c4b844d1-4786-4b17-88ab-33caa21112d6.gif)
+
+
 
 ## 📅 Schedule
 
@@ -92,7 +101,8 @@ https://user-images.githubusercontent.com/96522144/158065592-c8e80a69-4aaf-4ada-
 ### Backend
 
 - node.js
-- mongoDB, mongoose
+- mongoDB
+- mongoose
 - Express
 - socket.io
 - mocha, chai, supertest
@@ -105,9 +115,6 @@ https://user-images.githubusercontent.com/96522144/158065592-c8e80a69-4aaf-4ada-
 ## 🕹 Getting Started
 
 ### Installation
-
-- Local 환경에서 실행하기 위해서 몇 가지 사전 준비가 필요합니다.
-- 각 Repository를 Clone 한 후, .env 파일에 환경 변수를 입력해주세요.
 
 ```
 git clone https://github.com/woongminKi/dino-run-frontend.git
@@ -136,8 +143,11 @@ socket을 통해 비동기적으로 들어오는 상태 값을 saga의 generator
 ### - 안면 인식, 감정 분석 face-api
 
 게임 조작을 키보드로 하는 것은 많이 있지만 안면 인식을 해 나의 감정을 분석해 게임 조작을 하면 어떨까? 하는 생각이 들었습니다. 그러던 도중 유투브에서 눈썹으로 위치를 이동하며 점수를 올리는 게임을 보게 되면서 그것에 영감을 받아 디노런에 접목 시키면 게임의 재미를 향상시킬 수 있겠다고 생각했습니다.
+
 안면 인식을 통해 유저의 감정을 인식해 점수로 환산하는 값을 Redux state로 관리를 해주며 일정 점수 이상이 되었을 때 점프가 되는 식으로 구현했습니다. 기쁨, 슬픔, 화남, 두려움, 놀람, 역겨움의 감정을 인지할 수 있으며 이 중에 게임을 하면서 조금이라도 많이 웃으면 좋겠다고 생각해 웃었을 때 캐릭터가 점프를 할 수 있게끔 구현했습니다.
+
 face-api는 라이브러리이기 때문에 구현하는데에는 큰 어려움은 없었지만 감정 점수를 통해 점프 이벤트를 발생시키는 부분이 제겐 챌린지였습니다. 키보드, 마우스 외에 이벤트를 발생시켜 액션을 주는 것은 예제로도 접해보지 못했기 때문입니다. 결국 new Event 함수를 사용해 여러 감정 중 웃었을 때 나오는 Happy 점수를 통해 jump 이벤트를 발생시켜 캐릭터를 점프 시킬 수 있게 구현했습니다.
+
 처음 기획 떄 시도해보고 싶었지만 구현 하면서 여러 이슈로 후순위로 미루어 둔 기능까지 다 구현할 수 있어 하면 할 수 있다 라는 자신감과 성취감을 얻을 수 있었던 순간이었습니다.
 
 링크 : https://github.com/justadudewhohacks/face-api.js/
