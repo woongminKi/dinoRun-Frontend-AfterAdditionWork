@@ -23,7 +23,7 @@ function App() {
           element={<ReadyForBattleRoom />}
         />
         <Route path="/lobby" element={<Lobby />} />
-        <Route path="/game/:roomid" element={<GameContainer />} />
+        <Route path="/game" element={<GameContainer />} />
       </Routes>
     </>
   );
