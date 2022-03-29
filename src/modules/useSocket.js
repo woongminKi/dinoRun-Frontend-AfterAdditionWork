@@ -41,8 +41,8 @@ export const socketAction = {
   gameStart: (id) => {
     socket.emit("gameStart", id);
   },
-  gameScore: (score) => {
-    socket.emit("gameScore", score);
+  gameScore: (score, roomId) => {
+    socket.emit("gameScore", score, roomId);
   },
   leaveRoom: (roomId, user) => {
     socket.emit("leaveRoom", roomId, user);

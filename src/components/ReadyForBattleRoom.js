@@ -41,7 +41,8 @@ export default function ReadyForBattleRoom() {
   }, []);
 
   if (game.isGameStart) {
-    navigate("/game");
+    navigate(`/game/${roomid}`);
+    // navigate("/game");
   }
 
   if (rooms) {

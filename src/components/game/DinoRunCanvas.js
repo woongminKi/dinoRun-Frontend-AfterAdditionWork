@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import * as faceApi from "face-api.js";
@@ -25,6 +25,7 @@ import {
 export default function DinoRunCanvas() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const params = useParams();
 
   const canvasRef = useRef(null);
   const gameResource = useRef(null);
@@ -32,6 +33,7 @@ export default function DinoRunCanvas() {
   const detectRef = useRef(null);
 
   const { faceEmotionHappyScore } = useSelector((state) => state.game);
+  const { roomid } = params;
 
   const [score, setScore] = useState("");
   const [isCollision, setIsCollision] = useState(false);
@@ -95,7 +97,7 @@ export default function DinoRunCanvas() {
 
   useEffect(() => {
     dispatch(getMyScore(score));
-    socketAction.gameScore(score);
+    socketAction.gameScore(score, roomid);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [score]);
 
